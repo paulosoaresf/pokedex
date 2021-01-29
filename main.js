@@ -1,3 +1,4 @@
+// ---------------- Light/Dark Mode ----------------------------
 const mode = document.querySelector('button.mode');
 const body = document.querySelector('body');
 
@@ -26,3 +27,5 @@ const toggleMode = (e) => {
 };
 
 mode.addEventListener('click', toggleMode);
+// ---------------- Light/Dark Mode End ----------------------------
+
