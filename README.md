@@ -1,4 +1,4 @@
-# PokédDex JavaScript App
+# PokéDex JavaScript App
 
 PokéDex JS App using [PokédDex API](https://pokedevs.gitbook.io/pokedex/).
 
