@@ -140,8 +140,24 @@ button.mode {
 }
 
 .card .favorite {
-  display: none;
+  display: flex;
+  justify-content: flex-end;
 }
+
+button.favorite {
+  width: 20px;
+  height: 20px;
+  border: 1px solid red;
+  outline: none;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+button.fav {
+  background-color: red;
+}
+
 
 @media screen and (max-width: 1244px) {
   .card {

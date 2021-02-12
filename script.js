@@ -17,10 +17,14 @@ const types = [
   'normal',
 ];
 
-const POKEMON_COUNT = 25;
+const POKEMON_COUNT = 4;
 
 const cardHTML = `
 <div class="card" id ="card-{id}">
+<div class="favorite">
+  <button class="favorite" data-id={id}>
+  </button>
+</div>
 <div class="title">
   <h2>{name}</h2>
   <small># {id}</small>
@@ -34,9 +38,6 @@ const cardHTML = `
 <div class="type {type}">
   <p>{type}</p>
 </div>
-<button class="favorite" data-id={id}>
-  <div class="heart"></div>
-</button>
 </div>
 `;
 
@@ -67,17 +68,16 @@ const fetchPokemon = async (number) => {
 const customReplacer = (text, source, destination) => {
   const regex = new RegExp(source, 'gi');
   return text.replace(regex, destination);
-}
+};
 
 const createCard = (pokemon) => {
-  const {id, name, type} = pokemon;
+  const { id, name, type } = pokemon;
   let newCard = customReplacer(cardHTML, `\{id\}`, id);
   newCard = customReplacer(newCard, `\{name\}`, name);
   newCard = customReplacer(newCard, `\{type\}`, type);
 
   cards.innerHTML += newCard;
-  
-}
+};
 
 const fetchPokemons = async () => {
   for (let index = 1; index <= POKEMON_COUNT; index++) {
@@ -85,6 +85,38 @@ const fetchPokemons = async () => {
     // console.log(pokemon);
     createCard(pokemon);
   }
+  
+  let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+
+  const favButtons = document.querySelectorAll('button.favorite');
+  favButtons.forEach((button, index) => {
+    const buttonId = index+1;
+    if(favorites.indexOf(buttonId.toString()) > -1){
+      button.classList.add('fav');
+    }
+
+    button.addEventListener('click', setFavorite);
+  })
+};
+
+const setFavorite = (e) => {
+  let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+  const pokeId = e.target.dataset.id;
+  const button = e.target;
+  const index = favorites.indexOf(pokeId);
+
+  console.log(button);
+  
+  if(index == -1){
+    favorites.push(pokeId);
+    button.classList.add('fav');
+  } else {
+    favorites.splice(index,1);
+    button.classList.remove('fav');
+  } 
+  localStorage.setItem('favorites', JSON.stringify(favorites));
+
 };
 
 fetchPokemons();
