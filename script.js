@@ -22,7 +22,8 @@ const POKEMON_COUNT = 4;
 const cardHTML = `
 <div class="card" id ="card-{id}">
 <div class="favorite">
-  <button class="favorite" data-id={id}>
+  <i class="far fa-heart favorite" data-id={id}></i>
+  
   </button>
 </div>
 <div class="title">
@@ -89,11 +90,12 @@ const fetchPokemons = async () => {
   let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 
 
-  const favButtons = document.querySelectorAll('button.favorite');
+  const favButtons = document.querySelectorAll('i.favorite');
   favButtons.forEach((button, index) => {
     const buttonId = index+1;
     if(favorites.indexOf(buttonId.toString()) > -1){
-      button.classList.add('fav');
+      button.classList.add('fas');
+      button.classList.remove('far');
     }
 
     button.addEventListener('click', setFavorite);
@@ -105,15 +107,15 @@ const setFavorite = (e) => {
   const pokeId = e.target.dataset.id;
   const button = e.target;
   const index = favorites.indexOf(pokeId);
-
-  console.log(button);
   
   if(index == -1){
     favorites.push(pokeId);
-    button.classList.add('fav');
+    button.classList.add('fas');
+    button.classList.remove('far');
   } else {
     favorites.splice(index,1);
-    button.classList.remove('fav');
+    button.classList.add('far');
+    button.classList.remove('fas');
   } 
   localStorage.setItem('favorites', JSON.stringify(favorites));
 
